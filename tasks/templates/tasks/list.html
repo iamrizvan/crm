@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasks</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      .main-section {
+        background-color: #638cb8;
+        align-self: center;
+        padding: 10px;
+      }
+
+      .heading {
+        text-align: center;
+        color: white;
+        font-size: 35px;
+        margin: 20px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+      }
+
+      input::placeholder {
+        color: #d3d3d3;
+      }
+
+      .btn-submit {
+        background-color: #6ba3e8;
+        font-size: 25px;
+        font-weight: 600;
+      }
+
+      .center-column {
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 0.75);
+      }
+
+      .item-row {
+        background-color: #906abd;
+        margin: 10px;
+        padding: 15px;
+        border-radius: 3px;
+        box-shadow: 0px -1px 10px -4px rgba(0, 0, 0, 0.75);
+      }
+      .item-title {
+        color: #fff;
+        font-size: 25px;
+        font-weight: 700;
+      }
+      .item-date {
+        color: #fff;
+        font-size: 18px;
+      }
+
+      .btn-danger {
+        background-color: #ffae19;
+        border-color: #e59400;
+      }
+
+      .action-button {
+        width: 100px;
+        font-weight: 300;
+        font-size: 20px;
+        margin: 5px;
+      }
+      .task-item {
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-section">
+      <h1 class="heading">YOUR TASKS</h1>
+      <form method="POST" action="/">
+        {% csrf_token %}
+        <div class="col-12">
+          {{form.title}}
+          <input
+            class="btn btn-info btn-submit"
+            type="submit"
+            name="Create Task"
+          />
+        </div>
+      </form>
+      <div class="todo-list">
+        {% for task in tasks %}
+        <div class="item-row row task-item">
+          <div class="col-12 col-md-10">
+            {% if task.complete == True %}
+            <strike class="item-title">{{task}}</strike>
+            {% else %}
+            <span class="item-title">{{task}}</span>
+            {% endif %}
+            <p class="item-date">{{task.created}}</p>
+          </div>
+          <div class="col-2 col-md-1">
+            <a
+              class="btn btn-sm btn-info action-button"
+              href="{% url 'update_task' task.id %}"
+              >Update</a
+            >
+            <a
+              class="btn btn-sm btn-danger action-button"
+              href="{% url 'delete_task' task.id %}"
+              >Delete</a
+            >
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delete Task</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      .main-section {
+        background-color: #638cb8;
+        align-self: center;
+        padding: 10px;
+      }
+      .heading {
+        text-align: center;
+        color: white;
+        font-size: 35px;
+        margin: 20px;
+      }
+      .item-row {
+        background-color: #906abd;
+        margin: 10px;
+        padding: 15px;
+        border-radius: 3px;
+        box-shadow: 0px -1px 10px -4px rgba(0, 0, 0, 0.75);
+      }
+      .item-title {
+        color: #fff;
+        font-size: 25px;
+        font-weight: 700;
+      }
+      .item-msg {
+        color: #fff;
+        font-size: 18px;
+      }
+
+      .btn-danger {
+        background-color: #ffae19;
+        border-color: #e59400;
+      }
+
+      .action-button {
+        width: 100px;
+        font-weight: 300;
+        font-size: 20px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body class="main-section">
+    <h3 class="heading">DELETE TASK</h3>
+    <div class="item-row row">
+      <div class="col-12 col-md-10">
+        <p class="item-msg">Are you sure that you want to delete the task?</p>
+        <p class="item-title">"{{task}}"</p>
+      </div>
+      <div class="col-2 col-md-1">
+        <a class="btn btn-info action-button" href="{% url 'list' %}">Cancel</a>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input
+            class="btn btn-danger action-button"
+            type="submit"
+            value="Confirm"
+            name="Confirm"
+          />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
