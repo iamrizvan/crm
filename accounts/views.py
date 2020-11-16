@@ -10,7 +10,6 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import admin_only, unauthenticated_user, allowed_users
-from django.contrib.auth.models import Group
 
 
 # Create your views here.
@@ -22,13 +21,6 @@ def register_page(request):
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
-
-            # Add user into customer when signup
-            group = Group.objects.get(name='customer')
-            user.groups.add(group)
-
-            # Create user when create customer
-            Customer.objects.create(user=user)
             messages.success(request, "Account was created for "+username)
             return redirect('login')
 
@@ -84,7 +76,6 @@ def user_page(request):
     total_orders = orders.count()
     delivered = orders.filter(status='Delivered').count()
     pending = orders.filter(status='Pending').count()
-    print('ORDRES: ', orders)
     context = {'orders': orders, 'total_orders': total_orders, 'delivered': delivered,
                'pending': pending
                }
